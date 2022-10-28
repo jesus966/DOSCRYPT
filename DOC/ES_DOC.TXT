@@ -1,0 +1,102 @@
+                        DOSCRYPT VERSIàN 1.0.0
+                        ----------------------
+
+ÖNDICE DE CONTENIDOS
+--------------------
+1. ¨QU ES Y PARA QUE SIRVE DOSCRYPT?
+2. INSTALACIàN Y USO DE DOSCRYPT
+3. CàDIGOS DE RETORNO DEL PROGRAMA
+4. FUNCIONAMIENTO DETALLADO DE DOSCRYPT
+5. AUTOR
+
+1. ¨QU ES Y PARA QUE SIRVE DOSCRYPT?
+-------------------------------------
+    DOSCRYPT es un programa de encriptaci¢n de datos para MS-DOS,
+    creado como una herramienta para demostrar el uso de la librer¡a
+    tiny-AES y SHA-256 para el master propio de ciberseguridad de
+    la Universidad de Sevilla.
+    
+2. INSTALACIàN Y USO DE DOSCRYPT
+--------------------------------
+    DOSCRYPT no necesita de instalaci¢n propiamente dicha. Basta con
+    s¢lo utilizar la versi¢n del ejecutable adecuada. Por el momento
+    hay versiones para MS-DOS de 16 bits y versiones adecuadas a
+    las versiones modernas de Windows de 32 y 64 bits.
+    
+    Su uso es muy simple, pudiendo obtener informaci¢n en la l¡nea de
+    comandos usando DOSCRYPT.EXE /?:
+    
+    -------------------------------------------------------------------
+    |Encrypts or decrypts a file using AES-256.                       |
+    |                                                                 |
+    |Use:                                                             |
+    |                                                                 |
+    |DOSCRYPT.EXE [/?] [/D] [/S] [/V] [/P][passphrase] SOURCE DEST    |
+    |                                                                 |
+    |/?                     Shows this help screen.                   |
+    |/D                     Decrypts the given file.                  |
+    |/S                     Silent mode.                              |
+    |/V                     Verbose mode.                             |
+    |/P PASSPHRASE          Set the passphrase to encrypt or decrypt. |
+    |SOURCE                 Source file to encrypt or decrypt.        |
+    |DEST                   Encrypted or decrypted destination file.  |
+    -------------------------------------------------------------------
+    
+    En todos los casos es necesario indicar un fichero origen 
+    (el fichero que se encriptar /desencriptar ) y un fichero destino.
+    
+    Por defecto el programa funciona en modo encriptar, si se usa la
+    opci¢n /D entonces desencriptar  el archivo origen.
+    
+    La opci¢n /S hace que el programa entre en modo silencioso. Esto
+    quiere decir que no mostrar  nada en pantalla ni preguntar  por
+    ning£n tipo de entrada. 
+    
+    La opci¢n /V muestra en pantalla informaci¢n extra sobre el proceso
+    de encriptado/desencriptado, como son el tama¤o de bloque en el que
+    se lee los archivos, la llave usada en el proceso de cifrado, el 
+    vector de iniciaci¢n o el padding a aplicar en el £ltimo bloque de
+    lectura/escritura del archivo.
+    
+    La opci¢n /P permite establecer una frase de paso mediante l¡nea de 
+    comandos, de forma que el programa no preguntar  al usuario por
+    esta al inicio.
+    
+3. CàDIGOS DE RETORNO DEL PROGRAMA
+----------------------------------
+    Con el objetivo de permitir que se pueda usar el programa de forma
+    aut¢noma con scripts, DOSCRYPT devuelve una serie de c¢digos al 
+    terminar su ejecuci¢n con el siguiente significado:
+        
+        CàDIGO 0 -> El programa termin¢ de forma exitosa.
+        CàDIGO 1 -> Se mostr¢ la ayuda por pantalla.
+        CàDIGO 2 -> No se introdujeron los par metros de forma correcta.
+        CàDIGO 3 -> Hubo un error de lectura/escritura con los archivos.
+        CàDIGO 4 -> El archivo a descifrar no tiene un formato v lido.
+        CàDIGO 5 -> La frase de paso especificada no es v lida.
+        CàDIGO 6 -> Memoria insuficiente para ejecutar el programa.
+
+4. FUNCIONAMIENTO DETALLADO DE DOSCRYPT
+---------------------------------------
+    DOSCRYPT usa para cifrar el algoritmo AES-256 bits en modo CBC.
+    
+    Para encriptar genera el hash SHA-256 de la llave de paso introducida
+    y usa el resultado como clave para el proceso del algoritmo. Tambi‚n
+    genera un vector IV "aleatorio" para poder cifrar el archivo.
+    
+    Al archivo a cifrar/descifrar, se le genera/recupera una cabecera
+    que contiene una firma, la versi¢n de la cabecera, el modo de encriptado
+    (s¢lo CBC de momento), el vector de inicializaci¢n y la palabra 
+    PASSPHRASEOK encriptada, con el objeto de poder verificar de forma
+    r pida si la contrase¤a introducida a la hora de cifrar es correcta o
+    incorrecta.
+    
+    Finalmente, con la informaci¢n de esta cabecera se puede proceder a
+    descifrar el archivo cuando sea necesario.
+
+5. AUTOR
+--------
+
+    Copyright ¸ 2022 Jes£s Fern ndez Gamito
+
+    This project is MIT licensed.

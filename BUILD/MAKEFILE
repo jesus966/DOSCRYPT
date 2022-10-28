@@ -1,0 +1,36 @@
+# Makefile for compiling DOSCRYPT
+# The default compiler is TCC from Borland Turbo C++ 3.0
+COMPILER		= TCC
+BUILD_DIR		= ..\BINARIES\DOS
+SOURCE_DIR		= ..\SRC
+DEP_DIR			= ..\DEP
+SRC_FILE_NAME	= DOSCRYPT
+CLEAN_FILES		= *.OBJ
+
+#Flags for EXE
+COMPILER_FLAGS	= -I$(DEP_DIR)
+
+#Flags for COM
+COM_COMP_FLAGS  = -I$(DEP_DIR) -mt -lt
+
+default: all
+
+all: doscrypt
+
+doscrypt: $(SOURCE_DIR)\*.C $(DEP_DIR)\*.C $(DEP_DIR)\*.H
+	$(COMPILER) $(COMPILER_FLAGS) $(SOURCE_DIR)\$(SRC_FILE_NAME).C
+	@COPY $(SRC_FILE_NAME).EXE $(BUILD_DIR)
+	@DEL $(SRC_FILE_NAME).EXE
+	@DEL $(CLEAN_FILES)
+
+com: $(SOURCE_DIR)\*.C $(DEP_DIR)\*.C $(DEP_DIR)\*.H
+	$(COMPILER) $(COM_COMP_FLAGS) $(SOURCE_DIR)\$(SRC_FILE_NAME).C
+	@COPY $(SRC_FILE_NAME).COM $(BUILD_DIR)
+	@DEL $(SRC_FILE_NAME).COM
+	@DEL $(CLEAN_FILES)
+
+delete:
+	@DEL $(BUILD_DIR)\*.*
+	
+clean:
+	@DEL $(CLEAN_FILES)
